@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">    <title>MuzzLow</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gabriela&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header Of PWA-app (App Name & Search Elements) -->
+    <header>
+        <div class="container header-flex">
+            <div class="logo">MuzzLow</div>
+            <div class="search-panel">
+                <input type="text" name="" id="search-line" placeholder="Поиск...">
+                <button class="search-btn btn">Найти</button>
+            </div>
+            
+        </div>
+        <div class="header-blur" id="header-blur"></div>
+    </header>
+
+    <!-- Playlist -->
+    <main>
+        <div class="container playlist-container">
+            <!-- Playlist Datas -->
+            <section class="playlist-header">
+                <img id="playlist-img" src="imgs/playlist.webp">
+                <div class="playlist-data">
+                    <h2 id="playlist-name">Плейлист</h2>
+                    <p id="playlist-info">
+                        Песен: <span id="playlist-len"></span><br>
+                        Длительность: <span id="playlist-dur"></span>
+                    </p>
+                </div>
+                <button class="btn playlist_play-btn" id="playlist-play">▶</button>
+            </section>
+            <!-- Playlist Songs Display (Base = 0 songs) -->
+            <section class="playlist-section" id="playlist-tracks">
+                <!-- 0 Songs In PLaylist Window -->
+                <div class="none-playlist">
+                    <h2 class="none-h2">Песен пока нет :(</h2>
+                    <p class="none-text">Начните заполнять Плейлист, воспользовавшись поиском, или импортируйте свой Плейлист с других площадок</p>
+                    <button class="btn" id="importBtn">Импортировать</button>
+                </div>
+                <!-- Songs List -->
+                <ul class="playlist-songs">
+                    <!-- Songs will be here-->
+                </ul>
+            </section>
+        </div>
+    </main>
+
+    <!-- Player -->
+    <footer class="player">
+        <div class="container player-container">
+            <!-- No Playing Song Allert -->
+            <p class="not-playing">Нет включенной песни</p>
+            <!-- Playing Song Data Section -->
+            <section class="cur_song">
+                <img id="cur_song-img" class="song-img" src="">
+                <div class="cur_song-text-flex">
+                    <span id="cur_song-name" class="song_name-text"></span>
+                    <span id="cur_song-artist" class="artist-text"></span>
+                </div>
+            </section>
+            <!-- Playing Song Buttons -->
+            <nav class="cur_song-nav">
+                <button id="previous-btn" class="cur_song-nav-btn btn">⏮</button>
+                <button id="pause-btn" class="cur_song-nav-btn btn">▶</button>
+                <button id="next-btn" class="cur_song-nav-btn btn">⏭</button>
+            </nav>
+        </div>
+    </footer>
+
+    <!-- Modal (Import) Window -->
+    <div id="import-modal" class="modal">
+        <div class="modal-content">
+            <h2>Импорт плейлиста</h2>
+            <p>Вставьте ссылку на плейлист с площадки Яндекс Музыка или Вк музыка</p>
+            <input type="text" id="import-input" placeholder="Ссылка...">
+            <div class="modal-btns">
+                <button id="modal-confirm" class="btn">Импортировать</button>
+                <button id="modal-cancel" class="btn">Отмена</button>
+            </div>
+        </div>
+    </div>
+    <!-- Search Results Modal Panel -->
+    <div class="modal modal-res" id="search-res">
+        <div class="modal-content search-results-panel">
+            <h2>Результаты по запросу: <span id="prompt-span"></span> <span id="len-finded"></span></h2>
+            <ul class="results-inner" id="resultsUl">
+                <!-- Searched Songs Here-->
+            </ul>
+            <span class="loading_res" id="res_placeholder">Поиск...</span>
+        </div>
+    </div>
+
+    <script src="config.js"></script>
+    <script src="script.js"></script>
+    
+</body>
+
+</html>

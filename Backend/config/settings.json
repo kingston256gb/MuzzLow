@@ -1,0 +1,31 @@
+{
+    "1": {
+        "chance": 20,
+        "up": 6,
+        "cooldown": 0.4
+    },
+
+    "2": {
+        "chance": 16,
+        "up": 4,
+        "cooldown": 0.55
+    },
+
+    "3": {
+        "chance": 13,
+        "up": 3,
+        "cooldown": 0.6
+    },
+
+    "4": {
+        "chance": 10,
+        "up": 2,
+        "cooldown": 0.7
+    },
+
+    "5": {
+        "chance": 7,
+        "up": 1,
+        "cooldown": 0.9
+    }
+}

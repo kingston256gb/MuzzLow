@@ -1,0 +1,15 @@
+# ------- окружения и IDE -------
+venv/
+.idea/
+__pycache__/
+
+# ------- секреты -------
+*.env
+!.env.example
+
+Frontend/config.js
+!Frontend/config.example.js
+
+# -------- личные данные -------
+Backend/data/playlist.json
+!Backend/data/playlist.example.json
