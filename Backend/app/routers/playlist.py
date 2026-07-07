@@ -1,10 +1,12 @@
 from fastapi import APIRouter
 
-from app.models.song import Song
+from app.services.song_model import Song
 from app.services.playlist_service import PlaylistService
+from app.services.audio_service import AudioService
 
 router = APIRouter(prefix="/playlist", tags=["ПЛЕЙЛИСТ"])
 service = PlaylistService()
+audio = AudioService()
 
 @router.get('/', summary='ПОЛУЧИТЬ ПЛЕЙЛИСТ')
 async def get_playlist():
@@ -18,11 +20,19 @@ async def get_playlist():
 async def play_song():
     service.load_or_create()
     curr_song = service.play_song()
-    return {
-        "ok": True,
-        "song": curr_song.to_dict(),
-        "playlist": service.get_playlist()
-    }
+    artist_str = ', '.join(curr_song.artist)
+    url = audio.get_audio_url(f'{curr_song.name} {artist_str}')
+    if url:
+        return {
+            "ok": True,
+            "meta": curr_song.to_dict(),
+            "url": url
+        }
+    else:
+        return {
+            "ok": False,
+            "msg": 'Не удалось получить ссылку для проигрывания'
+        }
 
 @router.delete('/{song_id}', summary='УДАЛИТЬ ПЕСНЮ')
 async def delete_song(song_id: str):
@@ -36,7 +46,7 @@ async def delete_song(song_id: str):
         }
     return {
         "ok": False,
-        "err": response['err']
+        "msg": response['err']
     }
 
 @router.post('/add', summary='ДОБАВИТЬ ПЕСНЮ')
@@ -52,5 +62,5 @@ async def add_song(song_id: str, song_name: str, artist: list[str], priority: in
     else:
         return {
             "ok": False,
-            "err": response["err"]
+            "msg": response["err"]
         }

@@ -1,6 +1,6 @@
 import random
 
-from app.models.song import Song
+from app.services.song_model import Song
 from app.utils.json_system import read_json, write_json
 
 class PlaylistService:
