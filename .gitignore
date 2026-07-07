@@ -2,13 +2,15 @@
 venv/
 .idea/
 __pycache__/
+.venv/
+.vscode/
 
 # ------- секреты -------
 *.env
 !.env.example
 
-Frontend/config.js
-!Frontend/config.example.js
+config.js
+!config.example.js
 
 # -------- личные данные -------
 Backend/data/playlist.json
