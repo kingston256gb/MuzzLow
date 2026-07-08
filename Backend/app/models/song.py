@@ -1,36 +1,53 @@
-class Song:
-    def __init__(self, id, name, artist, priority, img, settings):
-        self.id = id
+from sqlalchemy import ForeignKey
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-        self.name = name
-        self.artist = artist
-        self.priority = priority
-        self.img = img
+from app.models.base import Base, intpk
+from app.models.playlist import PlaylistTable
 
-        self.chance = settings[str(priority)]['chance']
-        self.cooldown = settings[str(priority)]['cooldown']
-        self.up = settings[str(priority)]['up']
 
-        self.idle = 0
-        self.played = 0
 
-    def __eq__(self, other):
-        return self.id == other.id
 
-    def play(self):
-        self.idle = 0
-        self.chance = 0
-        self.played += 1
+class SongTable(Base):
+    __tablename__ = 'songs'
 
-    def update(self):
-        self.idle += 1
-        if self.idle >= self.cooldown:
-            self.chance += self.up
+    id: Mapped[intpk]
+    name: Mapped[str] = mapped_column(nullable=False)
+    image_url: Mapped[str] = mapped_column(nullable=False)
+    youtube_id: Mapped[str] = mapped_column(unique=True, nullable=False)
+    genius_id: Mapped[int] = mapped_column(unique=True, nullable=False)
 
-    def to_dict(self):
-        return {
-                'name': self.name,
-                'artist': self.artist,
-                'priority': self.priority,
-                'img': self.img
-        }
+    artists: Mapped[list["ArtistTable"]] = relationship(
+        secondary='song_artist',
+        back_populates="songs",
+    )
+    playlists: Mapped[list["PlaylistTable"]] = relationship(
+        secondary="playlist_songs",
+        back_populates="songs"
+    )
+
+
+
+class ArtistTable(Base):
+    __tablename__ = 'artists'
+
+    id: Mapped[intpk]
+    name: Mapped[str] = mapped_column(nullable=False)
+    genius_id: Mapped[int] = mapped_column(nullable=False, unique=True)
+
+    songs: Mapped[list["SongTable"]] = relationship(
+        secondary='song_artist',
+        back_populates="artists"
+    )
+
+
+class SongArtistTable(Base):
+    __tablename__ = 'song_artist'
+
+    song_id: Mapped[int] = mapped_column(
+        ForeignKey('songs.id', ondelete='CASCADE'),
+        primary_key=True
+    )
+    artist_id: Mapped[int] = mapped_column(
+        ForeignKey('artist.id', ondelete='CASCADE'),
+        primary_key=True
+    )
