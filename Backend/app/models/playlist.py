@@ -13,7 +13,6 @@ class PlaylistTable(Base):
     user_id: Mapped[int] = mapped_column(
         ForeignKey('users.id', ondelete='CASCADE')
     )
-    position: Mapped[int] = mapped_column(nullable=True)
 
     songs: Mapped[list["SongTable"]] = relationship(
         secondary="playlist_songs",
