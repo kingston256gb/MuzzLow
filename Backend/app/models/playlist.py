@@ -2,7 +2,6 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy import ForeignKey
 
 from app.models.base import Base, intpk
-from app.models.song import SongTable
 
 
 class PlaylistTable(Base):

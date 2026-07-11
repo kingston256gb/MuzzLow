@@ -48,6 +48,6 @@ class SongArtistTable(Base):
         primary_key=True
     )
     artist_id: Mapped[int] = mapped_column(
-        ForeignKey('artist.id', ondelete='CASCADE'),
+        ForeignKey('artists.id', ondelete='CASCADE'),
         primary_key=True
     )
