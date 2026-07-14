@@ -1,7 +1,7 @@
 from datetime import datetime, timezone
 from time import timezone
 
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy import ForeignKey
 
 from enum import Enum
@@ -19,6 +19,12 @@ class UserTable(Base):
     )
     password_hash: Mapped[str] = mapped_column(nullable=False)
     telegram_id: Mapped[int] = mapped_column(nullable=False, unique=True)
+
+    bans: Mapped[list["BannedUserTable"]] = relationship(
+        back_populates="user",
+        lazy="selectin",
+        primaryjoin="and_(UserTable.id == BannedUserTable.user_id, BannedUserTable.is_active == True)"
+    )
 
 
 class UserStatsTable(Base):
@@ -76,3 +82,5 @@ class BannedUserTable(Base):
     )
     ban_duration: Mapped[int | None]
     is_active: Mapped[bool] = mapped_column(default=True)
+
+    user: Mapped["UserTable"] = relationship(back_populates="bans")
